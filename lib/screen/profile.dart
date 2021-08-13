@@ -15,6 +15,9 @@ class _Profile extends State<Profile> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Center(child: Text('นายซอฟรอน  กูวะ')),
+        SizedBox(
+          height: 20,
+        ),
         Center(child: Text('6210110081')),
       ],
     ));
