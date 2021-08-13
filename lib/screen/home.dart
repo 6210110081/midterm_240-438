@@ -14,14 +14,7 @@ class Home extends StatefulWidget {
 
 class _Home extends State<Home> {
   String dropdownValue = 'แสดงทั้งหมด';
-  List<Timeaction> initial = [];
   List<Timeaction> searchCurrent = [];
-
-  @override
-  void initState() {
-    searchCurrent = initial;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +23,6 @@ class _Home extends State<Home> {
       builder: (context, box, _) {
         final timeactions = box.values.toList().cast<Timeaction>();
         timeactions.sort((a, b) => a.todayDate.compareTo(b.todayDate));
-        initial = timeactions;
 
         return buildContent(timeactions);
       },
@@ -89,9 +81,9 @@ class _Home extends State<Home> {
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.all(8),
-              itemCount: timeactions.length,
+              itemCount: searchCurrent.length,
               itemBuilder: (BuildContext context, int index) {
-                final timeaction = timeactions[index];
+                final timeaction = searchCurrent[index];
 
                 return buildTimeaction(context, timeaction);
               },
@@ -156,7 +148,11 @@ class _Home extends State<Home> {
     value.forEach((element) {
       element.groupwork.contains(newValue!) ? searchCurrent.add(element) : '';
     });
-    if (searchCurrent.isEmpty) {
+    if (searchCurrent.isEmpty && value.isNotEmpty) {
+      print('if');
+      searchCurrent = [];
+    } else if (value.isNotEmpty) {
+      print('show');
       searchCurrent = value;
     }
   }
