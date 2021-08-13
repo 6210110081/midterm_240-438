@@ -120,7 +120,7 @@ class _TimeactionDialogState extends State<TimeactionDialog> {
 
         if (isValid) {
           final work = workController.text;
-          final groupwork = groupworkController.text;
+          final groupwork = dropdownValue;
 
           widget.onClickedDone(work, groupwork);
 
