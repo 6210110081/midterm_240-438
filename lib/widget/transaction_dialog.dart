@@ -1,53 +1,54 @@
 import 'package:flutter/material.dart';
 
-import '../model/transaction.dart';
+import '../model/timeaction.dart';
 
-class TransactionDialog extends StatefulWidget {
-  final Transaction? transaction;
-  final Function(String name, double amount, bool isExpense) onClickedDone;
+class TimeactionDialog extends StatefulWidget {
+  final Timeaction? timeaction;
+  final Function(String work, String groupwork, DateTime todayDate)
+      onClickedDone;
 
-  const TransactionDialog({
+  const TimeactionDialog({
     Key? key,
-    this.transaction,
+    this.timeaction,
     required this.onClickedDone,
   }) : super(key: key);
 
   @override
-  _TransactionDialogState createState() => _TransactionDialogState();
+  _TimeactionDialogState createState() => _TimeactionDialogState();
 }
 
-class _TransactionDialogState extends State<TransactionDialog> {
+class _TimeactionDialogState extends State<TimeactionDialog> {
   final formKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
-  final amountController = TextEditingController();
+  final workController = TextEditingController();
+  final groupworkController = TextEditingController();
 
-  bool isExpense = true;
+  late DateTime todayDate;
 
   @override
   void initState() {
     super.initState();
 
-    if (widget.transaction != null) {
-      final transaction = widget.transaction!;
+    if (widget.timeaction != null) {
+      final timeaction = widget.timeaction!;
 
-      nameController.text = transaction.name;
-      amountController.text = transaction.amount.toString();
-      isExpense = transaction.isExpense;
+      workController.text = timeaction.work;
+      groupworkController.text = timeaction.groupwork.toString();
+      todayDate = timeaction.todayDate;
     }
   }
 
   @override
   void dispose() {
-    nameController.dispose();
-    amountController.dispose();
+    workController.dispose();
+    groupworkController.dispose();
 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final isEditing = widget.transaction != null;
-    final title = isEditing ? 'Edit Transaction' : 'Add Transaction';
+    final isEditing = widget.timeaction != null;
+    final title = isEditing ? 'Edit Timeaction' : 'Add Timeaction';
 
     return AlertDialog(
       title: Text(title),
@@ -58,9 +59,9 @@ class _TransactionDialogState extends State<TransactionDialog> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               SizedBox(height: 8),
-              buildName(),
+              buildwork(),
               SizedBox(height: 8),
-              buildAmount(),
+              buildgroupwork(),
               SizedBox(height: 8),
               buildRadioButtons(),
             ],
@@ -74,26 +75,27 @@ class _TransactionDialogState extends State<TransactionDialog> {
     );
   }
 
-  Widget buildName() => TextFormField(
-        controller: nameController,
+  Widget buildwork() => TextFormField(
+        controller: workController,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
-          hintText: 'Enter Name',
+          hintText: 'Enter work',
         ),
-        validator: (name) =>
-            name != null && name.isEmpty ? 'Enter a name' : null,
+        validator: (work) =>
+            work != null && work.isEmpty ? 'Enter a work' : null,
       );
 
-  Widget buildAmount() => TextFormField(
+  Widget buildgroupwork() => TextFormField(
         decoration: InputDecoration(
           border: OutlineInputBorder(),
-          hintText: 'Enter Amount',
+          hintText: 'Enter groupwork',
         ),
         keyboardType: TextInputType.number,
-        validator: (amount) => amount != null && double.tryParse(amount) == null
-            ? 'Enter a valid number'
-            : null,
-        controller: amountController,
+        validator: (groupwork) =>
+            groupwork != null && double.tryParse(groupwork) == null
+                ? 'Enter a valid number'
+                : null,
+        controller: groupworkController,
       );
 
   Widget buildRadioButtons() => Column(
@@ -101,14 +103,14 @@ class _TransactionDialogState extends State<TransactionDialog> {
           RadioListTile<bool>(
             title: Text('Expense'),
             value: true,
-            groupValue: isExpense,
-            onChanged: (value) => setState(() => isExpense = value!),
+            groupValue: todayDate,
+            onChanged: (value) => setState(() => todayDate = value!),
           ),
           RadioListTile<bool>(
             title: Text('Income'),
             value: false,
-            groupValue: isExpense,
-            onChanged: (value) => setState(() => isExpense = value!),
+            groupValue: todayDate,
+            onChanged: (value) => setState(() => todayDate = value!),
           ),
         ],
       );
@@ -127,10 +129,10 @@ class _TransactionDialogState extends State<TransactionDialog> {
         final isValid = formKey.currentState!.validate();
 
         if (isValid) {
-          final name = nameController.text;
-          final amount = double.tryParse(amountController.text) ?? 0;
+          final work = workController.text;
+          final groupwork = double.tryParse(groupworkController.text) ?? 0;
 
-          widget.onClickedDone(name, amount, isExpense);
+          widget.onClickedDone(work, groupwork, todayDate);
 
           Navigator.of(context).pop();
         }

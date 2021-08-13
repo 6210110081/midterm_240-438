@@ -1,40 +1,37 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'transaction.dart';
+part of 'timeaction.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class TransactionAdapter extends TypeAdapter<Transaction> {
+class TimeactionAdapter extends TypeAdapter<Timeaction> {
   @override
   final int typeId = 0;
 
   @override
-  Transaction read(BinaryReader reader) {
+  Timeaction read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Transaction()
-      ..name = fields[0] as String
-      ..createdDate = fields[1] as DateTime
-      ..isExpense = fields[2] as bool
-      ..amount = fields[3] as double;
+    return Timeaction()
+      ..work = fields[0] as String
+      ..todayDate = fields[1] as DateTime
+      ..groupwork = fields[2] as String;
   }
 
   @override
-  void write(BinaryWriter writer, Transaction obj) {
+  void write(BinaryWriter writer, Timeaction obj) {
     writer
-      ..writeByte(4)
-      ..writeByte(0)
-      ..write(obj.name)
-      ..writeByte(1)
-      ..write(obj.createdDate)
-      ..writeByte(2)
-      ..write(obj.isExpense)
       ..writeByte(3)
-      ..write(obj.amount);
+      ..writeByte(0)
+      ..write(obj.work)
+      ..writeByte(1)
+      ..write(obj.todayDate)
+      ..writeByte(2)
+      ..write(obj.groupwork);
   }
 
   @override
@@ -43,7 +40,7 @@ class TransactionAdapter extends TypeAdapter<Transaction> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is TransactionAdapter &&
+      other is TimeactionAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

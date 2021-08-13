@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:midterm/boxes.dart';
-import 'package:midterm/model/transaction.dart';
+import 'package:midterm/model/timeaction.dart';
 import 'package:midterm/screen/home.dart';
 import 'package:midterm/screen/list.dart';
 import 'package:midterm/screen/profile.dart';
+import 'package:midterm/widget/timeaction_dialog.dart';
 import 'package:midterm/widget/transaction_dialog.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:hive/hive.dart';
@@ -14,8 +15,8 @@ void main() async {
 
   await Hive.initFlutter();
 
-  Hive.registerAdapter(TransactionAdapter());
-  await Hive.openBox<Transaction>('transactions');
+  Hive.registerAdapter(TimeactionAdapter());
+  await Hive.openBox<Timeaction>('timeactions');
 
   runApp(MyApp());
 }
@@ -104,8 +105,8 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
         onPressed: () => showDialog(
           context: context,
-          builder: (context) => TransactionDialog(
-            onClickedDone: addTransaction,
+          builder: (context) => TimeactionDialog(
+            onClickedDone: addTimeaction,
           ),
         ),
       ),
@@ -113,19 +114,18 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-Future addTransaction(String name, double amount, bool isExpense) async {
-  final transaction = Transaction()
-    ..name = name
-    ..createdDate = DateTime.now()
-    ..amount = amount
-    ..isExpense = isExpense;
+Future addTimeaction(String work, String groupwork) async {
+  final timeaction = Timeaction()
+    ..work = work
+    ..todayDate = DateTime.now()
+    ..groupwork = groupwork;
 
-  final box = Boxes.getTransactions();
-  box.add(transaction);
-  //box.put('mykey', transaction);
+  final box = Boxes.getTimeactions();
+  box.add(timeaction);
+  //box.put('mykey', timeaction);
 
-  // final mybox = Boxes.getTransactions();
-  // final myTransaction = mybox.get('key');
+  // final mybox = Boxes.getTimeactions();
+  // final myTimeaction = mybox.get('key');
   // mybox.values;
   // mybox.keys;
 }
