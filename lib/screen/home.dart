@@ -4,7 +4,6 @@ import 'package:hive/hive.dart';
 import 'package:midterm/boxes.dart';
 import 'package:midterm/model/timeaction.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:midterm/widget/transaction_dialog.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -14,13 +13,6 @@ class Home extends StatefulWidget {
 }
 
 class _Home extends State<Home> {
-  // @override
-  // void dispose() {
-  //   Hive.close();
-
-  //   super.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<Box<Timeaction>>(
@@ -44,16 +36,15 @@ class _Home extends State<Home> {
     } else {
       return Column(
         children: [
-          SizedBox(height: 24),
-          Text(
-            'Net Expense: ',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              // color: color,
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text('Search'),
+              ],
             ),
           ),
-          SizedBox(height: 24),
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.all(8),
