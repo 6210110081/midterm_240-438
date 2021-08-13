@@ -80,7 +80,7 @@ class _TimeactionDialogState extends State<TimeactionDialog> {
             work != null && work.isEmpty ? 'Enter a work' : null,
       );
 
-  String dropdownValue = 'One';
+  String dropdownValue = 'งานในบ้าน';
   Widget buildgroupwork() => DropdownButton<String>(
         value: dropdownValue,
         icon: const Icon(Icons.arrow_downward),
@@ -96,7 +96,7 @@ class _TimeactionDialogState extends State<TimeactionDialog> {
             dropdownValue = newValue!;
           });
         },
-        items: <String>['One', 'Two', 'Free', 'Four']
+        items: <String>['งานในบ้าน', 'งานในครัว']
             .map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,
@@ -104,16 +104,6 @@ class _TimeactionDialogState extends State<TimeactionDialog> {
           );
         }).toList(),
       );
-  // TextFormField(
-  //       decoration: InputDecoration(
-  //         border: OutlineInputBorder(),
-  //         hintText: 'Enter groupwork',
-  //       ),
-  //       validator: (groupwork) => groupwork != null && groupwork.isEmpty
-  //           ? 'Enter a valid number'
-  //           : null,
-  //       controller: groupworkController,
-  //     );
 
   Widget buildCancelButton(BuildContext context) => TextButton(
         child: Text('Cancel'),
