@@ -26,6 +26,7 @@ class _Home extends State<Home> {
   }
 
   Widget buildContent(List<Timeaction> timeactions) {
+    String dropdownValue = 'แสดงทั้งหมด';
     if (timeactions.isEmpty) {
       return Center(
         child: Text(
@@ -42,6 +43,35 @@ class _Home extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text('Search'),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DropdownButton<String>(
+                    focusColor: Colors.white,
+                    value: dropdownValue,
+                    icon: const Icon(Icons.arrow_downward),
+                    iconEnabledColor: Colors.black,
+                    iconSize: 24,
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        print(newValue);
+                        dropdownValue = newValue!;
+                      });
+                    },
+                    items: <String>['แสดงทั้งหมด', 'งานในบ้าน', 'งานในครัว']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
+                ),
               ],
             ),
           ),
@@ -65,8 +95,6 @@ class _Home extends State<Home> {
     BuildContext context,
     Timeaction timeaction,
   ) {
-    // final date = DateFormat.yMMMd().format(timeaction.createdDate);
-
     return Card(
       color: Colors.white,
       child: ExpansionTile(
@@ -87,40 +115,4 @@ class _Home extends State<Home> {
       ),
     );
   }
-
-  // Widget buildButtons(BuildContext context, Timeaction timeaction) => Row(
-  //       children: [
-  //         Expanded(
-  //           child: TextButton.icon(
-  //             label: Text('Edit'),
-  //             icon: Icon(Icons.edit),
-  //             onPressed: () => Navigator.of(context).push(
-  //               MaterialPageRoute(
-  //                 builder: (context) => TimeactionDialog(
-  //                   timeaction: timeaction,
-  //                   onClickedDone: (name, amount, isExpense) =>
-  //                       editTimeaction(timeaction, name, amount, isExpense),
-  //                 ),
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       ],
-  //     );
-
-  // void editTimeaction(
-  //   Timeaction timeaction,
-  //   String work,
-  //   String groupwork,
-  //   DateTime todayDate,
-  // ) {
-  //   timeaction.work = work;
-  //   timeaction.groupwork = groupwork;
-  //   timeaction.todayDate = todayDate;
-
-  //   // final box = Boxes.getTimeactions();
-  //   // box.put(timeaction.key, timeaction);
-
-  //   timeaction.save();
-  // }
 }
