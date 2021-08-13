@@ -13,6 +13,9 @@ class Home extends StatefulWidget {
 }
 
 class _Home extends State<Home> {
+  String dropdownValue = 'แสดงทั้งหมด';
+  List<Timeaction> searchCurrent = [];
+
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<Box<Timeaction>>(
@@ -26,7 +29,6 @@ class _Home extends State<Home> {
   }
 
   Widget buildContent(List<Timeaction> timeactions) {
-    String dropdownValue = 'แสดงทั้งหมด';
     if (timeactions.isEmpty) {
       return Center(
         child: Text(
@@ -59,6 +61,7 @@ class _Home extends State<Home> {
                     ),
                     onChanged: (String? newValue) {
                       setState(() {
+                        searchWork(timeactions, newValue);
                         print(newValue);
                         dropdownValue = newValue!;
                       });
@@ -114,5 +117,11 @@ class _Home extends State<Home> {
         ],
       ),
     );
+  }
+
+  void searchWork(List<Timeaction> value, String newValue) {
+    value.forEach((element) {
+      element.groupwork = newValue?
+    });
   }
 }
