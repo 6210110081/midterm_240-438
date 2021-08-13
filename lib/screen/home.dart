@@ -125,7 +125,12 @@ class _Home extends State<Home> {
                     child: const Text('Cancel'),
                   ),
                   TextButton(
-                    onPressed: () => Navigator.pop(context, 'OK'),
+                    onPressed: () {
+                      setState(() {
+                        timeaction.todayDate = DateTime.now();
+                      });
+                      Navigator.pop(context, 'OK');
+                    },
                     child: const Text('OK'),
                   ),
                 ],
@@ -144,7 +149,4 @@ class _Home extends State<Home> {
   //   });
   // }
 
-  void editDate(Timeaction timeaction) {
-    timeaction.todayDate = DateTime.now();
-  }
 }
