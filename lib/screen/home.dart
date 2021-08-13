@@ -98,24 +98,8 @@ class _Home extends State<Home> {
     BuildContext context,
     Timeaction timeaction,
   ) {
-    return TextButton(
-      onPressed: () => showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('AlertDialog Title'),
-          content: const Text('AlertDialog description'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'Cancel'),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'OK'),
-              child: const Text('OK'),
-            ),
-          ],
-        ),
-      ),
+    return Card(
+      color: Colors.white,
       child: ExpansionTile(
         tilePadding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
         title: Text(
@@ -128,6 +112,28 @@ class _Home extends State<Home> {
           timeaction.todayDate.toString(),
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
+        children: [
+          TextButton(
+            onPressed: () => showDialog<String>(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                title: const Text('Update Time Work'),
+                content: const Text('คุณแน่ใจไหมที่จะอัปเดตเวลาทำงาของคุณ'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 'Cancel'),
+                    child: const Text('Cancel'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 'OK'),
+                    child: const Text('OK'),
+                  ),
+                ],
+              ),
+            ),
+            child: const Text('Click for Update Time Work'),
+          ),
+        ],
       ),
     );
   }

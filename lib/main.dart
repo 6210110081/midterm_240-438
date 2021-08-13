@@ -4,7 +4,7 @@ import 'package:midterm/model/timeaction.dart';
 import 'package:midterm/screen/home.dart';
 import 'package:midterm/screen/list.dart';
 import 'package:midterm/screen/profile.dart';
-import 'package:midterm/widget/transaction_dialog.dart';
+import 'package:midterm/widget/timeaction_dialog.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
