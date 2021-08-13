@@ -82,15 +82,27 @@ class _Home extends State<Home> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.all(8),
-              itemCount: searchCurrent.length,
-              itemBuilder: (BuildContext context, int index) {
-                final timeaction = searchCurrent[index];
+            child: ReorderableListView.builder(
+                padding: EdgeInsets.all(8),
+                itemCount: searchCurrent.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final timeaction = searchCurrent[index];
+                  final String timeactionName = searchCurrent[index].work;
 
-                return buildTimeaction(context, timeaction);
-              },
-            ),
+                  return buildTimeaction(
+                      ValueKey(timeactionName), context, timeaction);
+                },
+                onReorder: (oldIndex, newIndex) {
+                  setState(() {
+                    print('oldIndex = $oldIndex');
+                    print('newIndex = $newIndex');
+                    if (newIndex > oldIndex) {
+                      newIndex = newIndex - 1;
+                    }
+                    final element = searchCurrent.removeAt(oldIndex);
+                    searchCurrent.insert(newIndex, element);
+                  });
+                }),
           ),
         ],
       );
@@ -98,10 +110,12 @@ class _Home extends State<Home> {
   }
 
   Widget buildTimeaction(
+    Key key,
     BuildContext context,
     Timeaction timeaction,
   ) {
     return Card(
+      key: key,
       color: Colors.white,
       child: ExpansionTile(
         tilePadding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
@@ -111,9 +125,12 @@ class _Home extends State<Home> {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         subtitle: Text(timeaction.groupwork),
-        trailing: Text(
-          timeaction.todayDate.toString(),
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        trailing: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            timeaction.todayDate.toString(),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
         ),
         children: [
           TextButton(
@@ -159,6 +176,7 @@ class _Home extends State<Home> {
       print('else');
       searchCurrent = value;
     }
+
     searchCurrent.sort((a, b) => a.todayDate.compareTo(b.todayDate));
   }
 }
