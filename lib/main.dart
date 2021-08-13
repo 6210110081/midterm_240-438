@@ -4,7 +4,6 @@ import 'package:midterm/model/timeaction.dart';
 import 'package:midterm/screen/home.dart';
 import 'package:midterm/screen/list.dart';
 import 'package:midterm/screen/profile.dart';
-import 'package:midterm/widget/timeaction_dialog.dart';
 import 'package:midterm/widget/transaction_dialog.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:hive/hive.dart';
@@ -114,7 +113,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-Future addTimeaction(String work, String groupwork) async {
+Future addTimeaction(
+  String work,
+  String groupwork,
+) async {
   final timeaction = Timeaction()
     ..work = work
     ..todayDate = DateTime.now()

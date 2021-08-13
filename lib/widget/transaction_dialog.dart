@@ -4,8 +4,7 @@ import '../model/timeaction.dart';
 
 class TimeactionDialog extends StatefulWidget {
   final Timeaction? timeaction;
-  final Function(String work, String groupwork, DateTime todayDate)
-      onClickedDone;
+  final Function(String work, String groupwork) onClickedDone;
 
   const TimeactionDialog({
     Key? key,
@@ -22,8 +21,6 @@ class _TimeactionDialogState extends State<TimeactionDialog> {
   final workController = TextEditingController();
   final groupworkController = TextEditingController();
 
-  late DateTime todayDate;
-
   @override
   void initState() {
     super.initState();
@@ -33,7 +30,6 @@ class _TimeactionDialogState extends State<TimeactionDialog> {
 
       workController.text = timeaction.work;
       groupworkController.text = timeaction.groupwork.toString();
-      todayDate = timeaction.todayDate;
     }
   }
 
@@ -63,7 +59,6 @@ class _TimeactionDialogState extends State<TimeactionDialog> {
               SizedBox(height: 8),
               buildgroupwork(),
               SizedBox(height: 8),
-              buildRadioButtons(),
             ],
           ),
         ),
@@ -98,23 +93,6 @@ class _TimeactionDialogState extends State<TimeactionDialog> {
         controller: groupworkController,
       );
 
-  Widget buildRadioButtons() => Column(
-        children: [
-          RadioListTile<bool>(
-            title: Text('Expense'),
-            value: true,
-            groupValue: todayDate,
-            onChanged: (value) => setState(() => todayDate = value!),
-          ),
-          RadioListTile<bool>(
-            title: Text('Income'),
-            value: false,
-            groupValue: todayDate,
-            onChanged: (value) => setState(() => todayDate = value!),
-          ),
-        ],
-      );
-
   Widget buildCancelButton(BuildContext context) => TextButton(
         child: Text('Cancel'),
         onPressed: () => Navigator.of(context).pop(),
@@ -130,9 +108,9 @@ class _TimeactionDialogState extends State<TimeactionDialog> {
 
         if (isValid) {
           final work = workController.text;
-          final groupwork = double.tryParse(groupworkController.text) ?? 0;
+          final groupwork = groupworkController.text;
 
-          widget.onClickedDone(work, groupwork, todayDate);
+          widget.onClickedDone(work, groupwork);
 
           Navigator.of(context).pop();
         }
