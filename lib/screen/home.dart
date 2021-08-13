@@ -15,6 +15,7 @@ class Home extends StatefulWidget {
 class _Home extends State<Home> {
   String dropdownValue = 'แสดงทั้งหมด';
   List<Timeaction> searchCurrent = [];
+  String searchText = 'แสดงทั้งหมด';
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,9 @@ class _Home extends State<Home> {
       valueListenable: Boxes.getTimeactions().listenable(),
       builder: (context, box, _) {
         final timeactions = box.values.toList().cast<Timeaction>();
+        searchWork(timeactions, searchText);
         timeactions.sort((a, b) => a.todayDate.compareTo(b.todayDate));
+        print('build');
 
         return buildContent(timeactions);
       },
@@ -61,9 +64,9 @@ class _Home extends State<Home> {
                       color: Colors.deepPurpleAccent,
                     ),
                     onChanged: (String? newValue) {
-                      searchWork(timeactions, newValue);
                       setState(() {
-                        dropdownValue = newValue!;
+                        searchText = newValue!;
+                        dropdownValue = newValue;
                       });
                     },
                     items: <String>['แสดงทั้งหมด', 'งานในบ้าน', 'งานในครัว']
@@ -144,16 +147,18 @@ class _Home extends State<Home> {
   }
 
   void searchWork(List<Timeaction> value, String? newValue) async {
+    print('search');
     searchCurrent = [];
     value.forEach((element) {
       element.groupwork.contains(newValue!) ? searchCurrent.add(element) : '';
     });
-    if (searchCurrent.isEmpty && value.isNotEmpty) {
+    if (newValue!.contains('งานในบ้าน') && newValue.contains('งานในครัว')) {
       print('if');
       searchCurrent = [];
-    } else if (value.isNotEmpty) {
-      print('show');
+    } else if (newValue.contains('แสดงทั้งหมด')) {
+      print('else');
       searchCurrent = value;
     }
+    searchCurrent.sort((a, b) => a.todayDate.compareTo(b.todayDate));
   }
 }

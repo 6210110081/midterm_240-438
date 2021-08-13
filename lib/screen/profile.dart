@@ -10,6 +10,13 @@ class Profile extends StatefulWidget {
 class _Profile extends State<Profile> {
   @override
   Widget build(BuildContext context) {
-    return Text('Profile Update');
+    return Center(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(child: Text('นายซอฟรอน  กูวะ')),
+        Center(child: Text('6210110081')),
+      ],
+    ));
   }
 }
