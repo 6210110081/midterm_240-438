@@ -1,6 +1,8 @@
 # midterm
 
-A new Flutter project.
+นายซอฟรอน กูวะ
+6210110081
+YouTube URL :
 
 ## Getting Started
 

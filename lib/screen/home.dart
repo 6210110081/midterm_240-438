@@ -14,12 +14,12 @@ class Home extends StatefulWidget {
 }
 
 class _Home extends State<Home> {
-  @override
-  void dispose() {
-    Hive.close();
+  // @override
+  // void dispose() {
+  //   Hive.close();
 
-    super.dispose();
-  }
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
