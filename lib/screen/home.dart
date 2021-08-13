@@ -96,9 +96,8 @@ class _Home extends State<Home> {
           maxLines: 2,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
-        subtitle: Text('1'),
         trailing: Text(
-          amount,
+          transaction.createdDate.toString(),
           style: TextStyle(
               color: color, fontWeight: FontWeight.bold, fontSize: 16),
         ),
@@ -126,32 +125,8 @@ class _Home extends State<Home> {
               ),
             ),
           ),
-          Expanded(
-            child: TextButton.icon(
-              label: Text('Delete'),
-              icon: Icon(Icons.delete),
-              onPressed: () => deleteTransaction(transaction),
-            ),
-          )
         ],
       );
-
-  Future addTransaction(String name, double amount, bool isExpense) async {
-    final transaction = Transaction()
-      ..name = name
-      ..createdDate = DateTime.now()
-      ..amount = amount
-      ..isExpense = isExpense;
-
-    final box = Boxes.getTransactions();
-    box.add(transaction);
-    //box.put('mykey', transaction);
-
-    // final mybox = Boxes.getTransactions();
-    // final myTransaction = mybox.get('key');
-    // mybox.values;
-    // mybox.keys;
-  }
 
   void editTransaction(
     Transaction transaction,
@@ -167,13 +142,5 @@ class _Home extends State<Home> {
     // box.put(transaction.key, transaction);
 
     transaction.save();
-  }
-
-  void deleteTransaction(Transaction transaction) {
-    // final box = Boxes.getTransactions();
-    // box.delete(transaction.key);
-
-    transaction.delete();
-    //setState(() => transactions.remove(transaction));
   }
 }
