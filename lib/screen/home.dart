@@ -14,7 +14,14 @@ class Home extends StatefulWidget {
 
 class _Home extends State<Home> {
   String dropdownValue = 'แสดงทั้งหมด';
+  List<Timeaction> initial = [];
   List<Timeaction> searchCurrent = [];
+
+  @override
+  void initState() {
+    searchCurrent = initial;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +30,7 @@ class _Home extends State<Home> {
       builder: (context, box, _) {
         final timeactions = box.values.toList().cast<Timeaction>();
         timeactions.sort((a, b) => a.todayDate.compareTo(b.todayDate));
+        initial = timeactions;
 
         return buildContent(timeactions);
       },

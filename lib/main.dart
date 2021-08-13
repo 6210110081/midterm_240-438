@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:midterm/boxes.dart';
 import 'package:midterm/model/timeaction.dart';
 import 'package:midterm/screen/home.dart';
-import 'package:midterm/screen/list.dart';
 import 'package:midterm/screen/profile.dart';
 import 'package:midterm/widget/timeaction_dialog.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -68,7 +67,6 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         children: <Widget>[
           Home(),
-          List(),
           Profile(),
         ],
       ),
@@ -83,13 +81,6 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.home),
             title: Text("Home"),
             selectedColor: Colors.purple,
-          ),
-
-          /// Likes
-          SalomonBottomBarItem(
-            icon: Icon(Icons.favorite_border),
-            title: Text("List"),
-            selectedColor: Colors.pink,
           ),
 
           /// Profile
@@ -124,10 +115,4 @@ Future addTimeaction(
 
   final box = Boxes.getTimeactions();
   box.add(timeaction);
-  //box.put('mykey', timeaction);
-
-  // final mybox = Boxes.getTimeactions();
-  // final myTimeaction = mybox.get('key');
-  // mybox.values;
-  // mybox.keys;
 }
