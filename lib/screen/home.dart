@@ -61,7 +61,7 @@ class _Home extends State<Home> {
                     ),
                     onChanged: (String? newValue) {
                       setState(() {
-                        searchWork(timeactions, newValue);
+                        // searchWork(timeactions, newValue);
                         print(newValue);
                         dropdownValue = newValue!;
                       });
@@ -112,16 +112,17 @@ class _Home extends State<Home> {
           timeaction.todayDate.toString(),
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
-        children: [
-          // buildButtons(context, timeaction),
-        ],
       ),
     );
   }
 
-  void searchWork(List<Timeaction> value, String newValue) {
-    value.forEach((element) {
-      element.groupwork = newValue?
-    });
+  // void searchWork(List<Timeaction> value, String? newValue) {
+  //   value.forEach((element) {
+  //     element.groupwork = newValue!;
+  //   });
+  // }
+
+  void editDate(Timeaction timeaction) {
+    timeaction.todayDate = DateTime.now();
   }
 }
