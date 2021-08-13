@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:midterm/screen/home.dart';
+import 'package:midterm/screen/list.dart';
+import 'package:midterm/screen/profile.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 void main() {
@@ -28,6 +31,15 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var _currentIndex = 0;
+  final PageController pageController = PageController(initialPage: 0);
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+      pageController.animateToPage(index,
+          duration: Duration(milliseconds: 400), curve: Curves.ease);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +47,25 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('Midterm'),
       ),
-      body: Container(
-        child: Text('body'),
+      body: PageView(
+        scrollDirection: Axis.horizontal,
+        controller: pageController,
+        onPageChanged: (indx) {
+          setState(() {
+            _currentIndex = indx;
+          });
+        },
+        children: <Widget>[
+          Home(),
+          List(),
+          Profile(),
+        ],
       ),
       bottomNavigationBar: SalomonBottomBar(
         currentIndex: _currentIndex,
-        onTap: (i) => setState(() => _currentIndex = i),
+        onTap: (index) {
+          _onItemTapped(index);
+        },
         items: [
           /// Home
           SalomonBottomBarItem(
@@ -52,15 +77,8 @@ class _MyHomePageState extends State<MyHomePage> {
           /// Likes
           SalomonBottomBarItem(
             icon: Icon(Icons.favorite_border),
-            title: Text("Likes"),
+            title: Text("List"),
             selectedColor: Colors.pink,
-          ),
-
-          /// Search
-          SalomonBottomBarItem(
-            icon: Icon(Icons.search),
-            title: Text("Search"),
-            selectedColor: Colors.orange,
           ),
 
           /// Profile
