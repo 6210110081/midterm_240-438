@@ -44,7 +44,7 @@ class _TimeactionDialogState extends State<TimeactionDialog> {
   @override
   Widget build(BuildContext context) {
     final isEditing = widget.timeaction != null;
-    final title = isEditing ? 'Edit Timeaction' : 'Add Timeaction';
+    final title = isEditing ? 'Edit Timeaction' : 'Add Work';
 
     return AlertDialog(
       title: Text(title),
@@ -65,7 +65,7 @@ class _TimeactionDialogState extends State<TimeactionDialog> {
       ),
       actions: <Widget>[
         buildCancelButton(context),
-        buildAddButton(context, isEditing: isEditing),
+        buildAddButton(context),
       ],
     );
   }
@@ -110,8 +110,8 @@ class _TimeactionDialogState extends State<TimeactionDialog> {
         onPressed: () => Navigator.of(context).pop(),
       );
 
-  Widget buildAddButton(BuildContext context, {required bool isEditing}) {
-    final text = isEditing ? 'Save' : 'Add';
+  Widget buildAddButton(BuildContext context) {
+    final text = 'Add';
 
     return TextButton(
       child: Text(text),

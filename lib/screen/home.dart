@@ -22,6 +22,7 @@ class _Home extends State<Home> {
       valueListenable: Boxes.getTimeactions().listenable(),
       builder: (context, box, _) {
         final timeactions = box.values.toList().cast<Timeaction>();
+        timeactions.sort((a, b) => a.todayDate.compareTo(b.todayDate));
 
         return buildContent(timeactions);
       },
@@ -40,7 +41,7 @@ class _Home extends State<Home> {
       return Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -60,9 +61,8 @@ class _Home extends State<Home> {
                       color: Colors.deepPurpleAccent,
                     ),
                     onChanged: (String? newValue) {
+                      searchWork(timeactions, newValue);
                       setState(() {
-                        // searchWork(timeactions, newValue);
-                        print(newValue);
                         dropdownValue = newValue!;
                       });
                     },
@@ -143,10 +143,13 @@ class _Home extends State<Home> {
     );
   }
 
-  // void searchWork(List<Timeaction> value, String? newValue) {
-  //   value.forEach((element) {
-  //     element.groupwork = newValue!;
-  //   });
-  // }
-
+  void searchWork(List<Timeaction> value, String? newValue) async {
+    searchCurrent = [];
+    value.forEach((element) {
+      element.groupwork.contains(newValue!) ? searchCurrent.add(element) : '';
+    });
+    if (searchCurrent.isEmpty) {
+      searchCurrent = value;
+    }
+  }
 }
