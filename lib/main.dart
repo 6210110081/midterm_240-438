@@ -13,6 +13,8 @@ void main() async {
 
   Hive.registerAdapter(TransactionAdapter());
 
+  await Hive.openBox<Transaction>('transaction');
+
   runApp(MyApp());
 }
 

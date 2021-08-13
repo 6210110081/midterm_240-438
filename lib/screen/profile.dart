@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
+  const Profile({Key? key}) : super(key: key);
+
+  @override
+  _Profile createState() => _Profile();
+}
+
+class _Profile extends State<Profile> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Profile'),
-    );
+    return Text('Profile Update');
   }
 }
